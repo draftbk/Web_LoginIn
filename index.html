@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="bmob.js"></script>
+<head>
+    <style type="text/css">
+        body{background:#FFBF00;text-align:center;}
+        div{width:778px;margin:0 auto;background:#fff;text-align:left;}
+    </style>
+</head>
+<body>
+
+<h1 align="center" style="display: block; margin-top: 200px;">登陆</h1>
+<p align="center">请输入你的登陆秘钥</p>
+
+<input id="demo" style="display: block; margin: 0 auto;" type="text">
+
+<button  style="display: block; width: 85px;margin: 0 auto;margin-top: 10px;" type="button" onclick="myFunction()">确认</button>
+
+<script>
+    function myFunction()
+    {
+        var x=document.getElementById("demo").value;
+        Bmob.initialize("fa04612a8ace6298c5fc97747a8c1c7b","d40a944c2e7529d77dc53005fb57f588");
+        var password = Bmob.Object.extend("password");
+        var query = new Bmob.Query(password);
+        query.first({
+            success: function(object) {
+                // 查询成功
+                if(x==object.get('key')){
+                    object.set('state','1');
+                    object.save();
+                    self.location='sign_in.html';
+                }else{
+                    alert("请输入正确秘钥");
+                }
+            },
+            error: function(error) {
+                alert("查询失败: " + error.code + " " + error.message);
+            }
+        });
+
+    }
+</script>
+
+</body>
+</html>
